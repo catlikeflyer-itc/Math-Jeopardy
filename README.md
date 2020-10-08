@@ -1,2 +1,2 @@
 # pensacom
-La mamada
+Proyecto de Pensamiento computacional para la ingenieria
