@@ -1,5 +1,6 @@
 from random import choice
 import csv
+import regex as re
 
 # Initialize boards and counters
 """
@@ -53,4 +54,47 @@ def get_problem(choice, dboard, sboard):
                 column = row.index(i)
     
     return sboard[row_][column]
+
+class Problem:
+    answer = None
+
+    def __init__(self, choice, dboard, sboard):
+        for row in dboard:
+            for i in row:
+                if i == choice:
+                    self.row = dboard.index(row)
+                    self.column = row.index(i)
+        
+        self.problem = sboard[self.row][self.column]
+
+    def get_answer(self):
+        lis = re.split(r'(\D)', self.problem)
+
+        for i in range(len(lis)):
+            if lis[i] == "+":
+                self.answer = int(lis[i-1])+int(lis[i+1])
+                return int(lis[i-1])+int(lis[i+1])
+
+            elif lis[i] == "-":
+                self.answer = int(lis[i-1])-int(lis[i+1])
+                return int(lis[i-1])-int(lis[i+1])
+
+            elif lis[i] == "*":
+                self.answer = int(lis[i-1])*int(lis[i+1])
+                return int(lis[i-1])*int(lis[i+1])  
+
+            elif lis[i] == "/":
+                self.answer = int(lis[i-1])/int(lis[i+1])
+                return int(lis[i-1])/int(lis[i+1])  
+        
+    def check_answer(self, answer):
+        if answer == self.answer:
+            return True
+        else:
+            return False
+
+        
+                
+
+
                 
