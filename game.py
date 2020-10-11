@@ -1,30 +1,38 @@
-from boards import generate_secret_board, generate_display_board, Problem
+from boards import GameBoard, Problem
 
-show_board = generate_display_board()
-secret_board = generate_secret_board()
+# Initialize gameboard
+board = GameBoard()
+show_board = board.generate_display_board()
+secret_board = board.generate_secret_board('equation.csv')
 
-for i in show_board:
-    print(i,'\n')
+# Points counter
+points = 0
 
-user_choice = input('Enter coordenates: ')
-problem = Problem(user_choice.upper(),show_board,secret_board)
+# If max points is reached, stops
+while points < 3:
+    for i in show_board:
+        print(i,'\n')
 
-print(problem.problem)
+    user_choice = input('Enter coordenates: ')
+    problem = Problem(user_choice.upper(),show_board,secret_board)
 
-user_answer = int(input('Resultado >>> '))
-problem.get_answer()
+    print(problem.problem)
 
-print(problem.check_answer(user_answer))
+    user_answer = int(input('Resultado >>> '))
+    problem.get_answer()
 
-""" Tests
-for i in show_board:
-    print(i,'\n')
+    if problem.check_answer(user_answer):
+        print(problem.check_answer(user_answer))
+        points += 1
+    else:
+        print(problem.check_answer(user_answer))
 
-print('\n')
+    board.remove_coord(problem.row, problem.column)
 
-for i in secret_board:
-    print(i,'\n')
-"""
+print('Ganaste!')
+
+
+
 
 
 
