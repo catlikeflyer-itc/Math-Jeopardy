@@ -120,7 +120,10 @@ def answerFrame():
     answerButton = Button(answerFrame, text="Submit answer")
     answerButton.grid(row=3, column=7,columnspan=3)
     
-    dataEntry = Entry(answerFrame ''', command=function we want it to do''')
+    dataEntry = Entry(answerFrame, '''command=function we want it to do''')
     dataEntry.grid(row=3, column=0, columnspan=4)
     
     return 0
+
+if __name__ == "__main__":
+    mainFrame()
