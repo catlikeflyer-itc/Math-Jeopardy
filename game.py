@@ -1,7 +1,6 @@
 from boards import GameBoard, Problem
 import time
 import threading
-import keyboard
 import sys
 
 def game():
@@ -26,6 +25,7 @@ def game():
             user_choice = input('Enter coordenates: ')     
         #ASCII check
         while(len(user_choice) != 2 or ord(user_choice[1]) < 65 or ord(user_choice[1]) > 69 or ord(user_choice[0]) < 49 or ord(user_choice[0]) > 53 ):
+            print(points)
             user_choice = input('Enter coordenates: ')
         solved.append(user_choice)
         problem = Problem(user_choice.upper(),show_board,secret_board)
@@ -48,7 +48,6 @@ timeout = 60
 t = threading.Timer(timeout, print, ["bruh, time's up"])
 t.start()
 game()
-t.cancel()
 
 
 
