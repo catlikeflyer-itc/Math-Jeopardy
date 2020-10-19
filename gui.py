@@ -245,3 +245,10 @@ class Answer:
 #######
 
 #########
+    dataEntry = Entry(answerFrame, '''command=function we want it to do''')
+    dataEntry.grid(row=3, column=0, columnspan=4)
+    
+    return 0
+
+if __name__ == "__main__":
+    mainFrame()

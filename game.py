@@ -44,6 +44,26 @@ def game():
             # asks the user to input the coordinate again, until it's not one in the list
             user_choice = input('Enter coordenates: ')     
         
+def game():
+# Initialize gameboard
+    board = GameBoard()
+    show_board = board.generate_display_board()
+    secret_board = board.generate_secret_board('equation.csv')
+    #lista que guarda coordenadas usadas
+    solved = []
+    # Points counter
+    points = 0
+
+    # If max points is reached, stops
+    while points < 3:
+        for i in show_board:
+            print(i,'\n')
+
+        user_choice = input('Enter coordenates: ')
+        while user_choice in solved:
+            #estas bien meco  check
+            print('Coordenate already solved')
+            user_choice = input('Enter coordenates: ')     
         #ASCII check
         while(len(user_choice) != 2 or ord(user_choice[1]) < 65 or ord(user_choice[1]) > 69 or ord(user_choice[0]) < 49 or ord(user_choice[0]) > 53 ):
             print(points)
@@ -56,6 +76,9 @@ def game():
         problem = Problem(user_choice.upper(),show_board,secret_board)
 
         # prints the equation to solve (NEEDS TO CHANGE TO ACCOMODATE THE GUI)
+        solved.append(user_choice)
+        problem = Problem(user_choice.upper(),show_board,secret_board)
+
         print(problem.problem)
 
         user_answer = int(input('Resultado >>> '))
@@ -74,6 +97,8 @@ def game():
     
     print('Ganaste!')
 
+        board.remove_coord(problem.row, problem.column)
+    print('Ganaste!')
 #threads y timeout
 timeout = 60
 t = threading.Timer(timeout, print, ["bruh, time's up"])
@@ -82,3 +107,9 @@ t.start()
 game()
 
 #####
+game()
+
+
+
+
+
