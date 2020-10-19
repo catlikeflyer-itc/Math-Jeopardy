@@ -1,22 +1,22 @@
 from random import choice
 import csv
-import regex as re
+import re
 
-# Initialize boards and counters
-"""
-El display board es el que el usuario puede ver, el secret board son los problemas que se esconden detras
-del display board.
-"""
+# display_board is the one the user can see,
+# the secret_board are the problems hidden behind
+# the options in the visible board.
 
+# class tha encapsulates the formation of the visible and problem boards 
 class GameBoard:
     def __init__(self):
         self.display_board = []
         self.secret_board = []
 
-# Create board to display
+    # creates the visible board
     def generate_display_board(self):
         j = 0
 
+        # creates a series of 25 string which are deposited into display_board 
         for x in range(1,6):
             self.display_board.append([])
 
@@ -27,15 +27,17 @@ class GameBoard:
         
         return self.display_board
 
-    # Create secret board with problems
+    # creates the secret board, the problems
     def generate_secret_board(self, file):
         c = 0
 
-        # Obtain list of equations from CSV file
+        # gets a list of equations form a .csv file
         with open(file, newline='') as f:
             reader = csv.reader(f)
             data = list(reader)
 
+        # places those equations in a board, similar to the 
+        # display_board creation process
         for i in range(0,5):
             self.secret_board.append([])
 
@@ -45,10 +47,11 @@ class GameBoard:
         
         return self.secret_board
 
-    # Removes already selected coordenates
+    # removes already selected coordenates by replacing the text with an 'x'
     def remove_coord(self, row, column):
         self.display_board[row][column] = 'x'
 
+# class that encapsulates the problem-solution revision
 class Problem:
     answer = None
 
@@ -61,7 +64,7 @@ class Problem:
         
         self.problem = sboard[self.row][self.column]
 
-    # Function that calculates the answer
+    # function that calculates the answer
     def get_answer(self):
         lis = re.split(r'(\D)', self.problem)
 
@@ -82,7 +85,7 @@ class Problem:
                 self.answer = int(lis[i-1])/int(lis[i+1])
                 return int(lis[i-1])/int(lis[i+1])  
     
-    # Compares answer with user's answer
+    # compares answer with user's answer
     def check_answer(self, answer):
         if answer == self.answer:
             return True
