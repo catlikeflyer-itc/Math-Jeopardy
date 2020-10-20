@@ -2,18 +2,10 @@ from boards import GameBoard, Problem
 import time
 import threading
 import sys
-from gui import Board, Answer
 
 def game():
     
-    # initialize the three types of objects there are:
-    # a Board from gui.py, 
-    boardObj = Board()
-    
-    # an Answer from gui.py,
-    answerObj = Answer()
-    
-    # and a GameBoard from boards.py
+    # initialize the object board as a GameBoard from boards.py
     board = GameBoard()
     
     # generate the secret_board and display_board atributes 
@@ -30,7 +22,7 @@ def game():
     # repeats until points reaches a value of 2
     while points < 3:
         
-        # reprints the board each iteration (NEEDS TO CHANGE TO ACCOMODATE THE GUI)
+        # reprints the board each iteration
         for i in show_board:
             print(i,'\n')
         
@@ -44,26 +36,6 @@ def game():
             # asks the user to input the coordinate again, until it's not one in the list
             user_choice = input('Enter coordenates: ')     
         
-def game():
-# Initialize gameboard
-    board = GameBoard()
-    show_board = board.generate_display_board()
-    secret_board = board.generate_secret_board('equation.csv')
-    #lista que guarda coordenadas usadas
-    solved = []
-    # Points counter
-    points = 0
-
-    # If max points is reached, stops
-    while points < 3:
-        for i in show_board:
-            print(i,'\n')
-
-        user_choice = input('Enter coordenates: ')
-        while user_choice in solved:
-            #estas bien meco  check
-            print('Coordenate already solved')
-            user_choice = input('Enter coordenates: ')     
         #ASCII check
         while(len(user_choice) != 2 or ord(user_choice[1]) < 65 or ord(user_choice[1]) > 69 or ord(user_choice[0]) < 49 or ord(user_choice[0]) > 53 ):
             print(points)
@@ -75,10 +47,7 @@ def game():
         # creates a Problem type object from boards.py with the atributes it needs
         problem = Problem(user_choice.upper(),show_board,secret_board)
 
-        # prints the equation to solve (NEEDS TO CHANGE TO ACCOMODATE THE GUI)
-        solved.append(user_choice)
-        problem = Problem(user_choice.upper(),show_board,secret_board)
-
+        # prints the equation to solve
         print(problem.problem)
 
         user_answer = int(input('Resultado >>> '))
@@ -97,8 +66,6 @@ def game():
     
     print('Ganaste!')
 
-        board.remove_coord(problem.row, problem.column)
-    print('Ganaste!')
 #threads y timeout
 timeout = 60
 t = threading.Timer(timeout, print, ["bruh, time's up"])
@@ -107,9 +74,3 @@ t.start()
 game()
 
 #####
-game()
-
-
-
-
-
