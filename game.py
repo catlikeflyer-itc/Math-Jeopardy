@@ -11,7 +11,7 @@ def game():
     # generate the secret_board and display_board atributes 
     # within the 'board' object instance
     show_board = board.generate_display_board()
-    secret_board = board.generate_secret_board('equation.csv')
+    secret_board = board.generate_secret_board()
     
     # list that holds the solved coordinates
     solved = []
@@ -45,7 +45,7 @@ def game():
         solved.append(user_choice)
 
         # creates a Problem type object from boards.py with the atributes it needs
-
+        problem = Problem(user_choice.upper(), show_board, secret_board)
 
         # prints the equation to solve
         print(problem.problem)

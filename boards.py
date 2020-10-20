@@ -41,7 +41,7 @@ class GameBoard:
             medium = list(reader1)
         
         with open('hard.csv', newline='') as f2:
-            reader = csv.reader2(f2)
+            reader2 = csv.reader(f2)
             hard = list(reader2)
 
         # places those equations in a board, similar to the 
