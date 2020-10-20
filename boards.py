@@ -2,21 +2,17 @@ from random import choice
 import csv
 import re
 
-# display_board is the one the user can see,
-# the secret_board are the problems hidden behind
-# the options in the visible board.
-
-# class tha encapsulates the formation of the visible and problem boards 
+# Clase para el tablero del juego
 class GameBoard:
     def __init__(self):
         self.display_board = []
         self.secret_board = []
 
-    # creates the visible board
+    # Metodo para crear la matriz visible
     def generate_display_board(self):
         j = 0
 
-        # creates a series of 25 string which are deposited into display_board 
+        # Iterar para crear una matriz 5x5
         for x in range(1,6):
             self.display_board.append([])
 
@@ -27,11 +23,11 @@ class GameBoard:
         
         return self.display_board
 
-    # creates the secret board, the problems
+    # Metodo para crear matriz no visible que contiene las preguntas
     def generate_secret_board(self):
         c = 0
         
-        # gets a list of equations form a .csv file
+        # Generar listas con las preguntas de acuerdo al nivel, estas estan escritas en archivos csv
         with open('easy.csv', newline='') as f:
             reader = csv.reader(f)
             easy = list(reader)
@@ -44,29 +40,38 @@ class GameBoard:
             reader2 = csv.reader(f2)
             hard = list(reader2)
 
-        # places those equations in a board, similar to the 
-        # display_board creation process
+        # Agrega de manera aleatoria las preguntas en la matriz no visible, de acuerdo al nivel
+        # Genera las filas
         for i in range(0,5):
             self.secret_board.append([])
 
+        # Poblar las primeras dos filas con preguntas faciles
+        for c in range(0,2):
             for j in range(0,5):
-                for c in range(0,2):
-                    self.secret_board[c].append(choice(easy)[0])
-                for c in range(2,4):
-                    self.secret_board[c].append(choice(medium)[0])
-                self.secret_board[c].append(choice(hard)[0])
+                self.secret_board[c].append(choice(easy)[0])
+        
+        # Poblar la tercera y cuarta fila con preguntas medianas
+        for c in range(2,4):
+            for j in range(0,5):
+                self.secret_board[c].append(choice(medium)[0])
+        
+        # Poblar ultima fila con preguntas dificiles
+        for j in range(0,5):    
+            self.secret_board[4].append(choice(hard)[0])
 
         return self.secret_board
 
-    # removes already selected coordenates by replacing the text with an 'x'
+    # Elimina las coordenas que ya seleccionaron por una x
     def remove_coord(self, row, column):
         self.display_board[row][column] = 'x'
 
-# class that encapsulates the problem-solution revision
+# Clase para el problema detras de la coordenada
 class Problem:
     answer = None
 
     def __init__(self, choice, dboard, sboard):
+
+        # Obtencion de la pregunta
         for row in dboard:
             for i in row:
                 if i == choice:
@@ -75,14 +80,15 @@ class Problem:
         
         self.problem = sboard[self.row][self.column]
 
-        if 'A' in choice or 'B' in choice:
+        # Asignacion de puntos dependiendo del nivel
+        if '1' in choice or '2' in choice:
             self.points = 3
-        elif 'C' in choice or 'D' in choice:
+        elif '3' in choice or '4' in choice:
             self.points = 5
-        elif 'E' in choice:
+        elif '5' in choice:
             self.points = 10   
 
-    # function that calculates the answer
+    # Funcion que calcula el resultado
     def get_answer(self):
         lis = re.split(r'(\D)', self.problem)
 
@@ -103,12 +109,13 @@ class Problem:
                 self.answer = int(lis[i-1])/int(lis[i+1])
                 return int(lis[i-1])/int(lis[i+1])  
     
-    # compares answer with user's answer
+    # Compara el resultado del problema con el ingresado por el usuario, regresa un booleano
     def check_answer(self, answer):
         if answer == self.answer:
             return True
         else:
             return False
+
 
 
 
