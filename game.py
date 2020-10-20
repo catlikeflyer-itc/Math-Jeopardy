@@ -20,7 +20,7 @@ def game():
     points = 0
 
     # repeats until points reaches a value of 2
-    while points < 3:
+    while points < 30:
         
         # reprints the board each iteration
         for i in show_board:
@@ -45,7 +45,7 @@ def game():
         solved.append(user_choice)
 
         # creates a Problem type object from boards.py with the atributes it needs
-        problem = Problem(user_choice.upper(),show_board,secret_board)
+
 
         # prints the equation to solve
         print(problem.problem)
@@ -57,7 +57,7 @@ def game():
         # a method from the class Problem from boards.py
         if problem.check_answer(user_answer):
             print(problem.check_answer(user_answer))
-            points += 1
+            points += problem.points
         else:
             print(problem.check_answer(user_answer))
 
@@ -73,4 +73,3 @@ t.start()
 
 game()
 
-#####

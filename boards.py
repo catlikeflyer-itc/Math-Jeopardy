@@ -28,13 +28,21 @@ class GameBoard:
         return self.display_board
 
     # creates the secret board, the problems
-    def generate_secret_board(self, file):
+    def generate_secret_board(self):
         c = 0
-
+        
         # gets a list of equations form a .csv file
-        with open(file, newline='') as f:
+        with open('easy.csv', newline='') as f:
             reader = csv.reader(f)
-            data = list(reader)
+            easy = list(reader)
+        
+        with open('medium.csv', newline='') as f1:
+            reader1 = csv.reader(f1)
+            medium = list(reader1)
+        
+        with open('hard.csv', newline='') as f2:
+            reader = csv.reader2(f2)
+            hard = list(reader2)
 
         # places those equations in a board, similar to the 
         # display_board creation process
@@ -42,9 +50,12 @@ class GameBoard:
             self.secret_board.append([])
 
             for j in range(0,5):
-                self.secret_board[c].append(choice(data)[0])
-            c += 1
-        
+                for c in range(0,2):
+                    self.secret_board[c].append(choice(easy)[0])
+                for c in range(2,4):
+                    self.secret_board[c].append(choice(medium)[0])
+                self.secret_board[c].append(choice(hard)[0])
+
         return self.secret_board
 
     # removes already selected coordenates by replacing the text with an 'x'
@@ -63,6 +74,13 @@ class Problem:
                     self.column = row.index(i)
         
         self.problem = sboard[self.row][self.column]
+
+        if 'A' in choice or 'B' in choice:
+            self.points = 3
+        elif 'C' in choice or 'D' in choice:
+            self.points = 5
+        elif 'E' in choice:
+            self.points = 10   
 
     # function that calculates the answer
     def get_answer(self):
