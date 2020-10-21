@@ -88,6 +88,7 @@ def game():
     print('Ganaste!')
     print(f'Puntos totales: {points}')
 
+
 def endGame():
     print("\nSe acabó el tiempo")
     os._exit(0)
@@ -100,7 +101,9 @@ if __name__ == "__main__":
     # Fija temporizador
     timeout = 90
     # Imprime que se acabo el tiempo, y termina la ejecucion
+
     t = threading.Timer(timeout, endGame)
+    t = threading.Timer(timeout, print, ["bruh, time's up"])
     t.start()
 
     # Correr juego

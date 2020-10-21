@@ -1,10 +1,12 @@
 import tkinter as tk
 import game
-
 global root, frame, leftFrame, rightFrame
 
-# this outside section creates the skeleton of the window,
-# the main Frame and the two side Frames that are located within it
+"""
+Intentamos hacer una interfaz grafica, pero debido a la falta de conocimiento para generar este, no pudimos llegar
+a este objetivo adicional que nos propusimos en equipo
+"""
+
 root = tk.Tk()
 root.geometry('500x500')
 
