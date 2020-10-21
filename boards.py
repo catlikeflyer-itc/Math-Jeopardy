@@ -94,20 +94,20 @@ class Problem:
 
         for i in range(len(lis)):
             if lis[i] == "+":
-                self.answer = int(lis[i-1])+int(lis[i+1])
-                return int(lis[i-1])+int(lis[i+1])
+                self.answer = float(lis[i-1])+float(lis[i+1])
+                return float(lis[i-1])+float(lis[i+1])
 
             elif lis[i] == "-":
-                self.answer = int(lis[i-1])-int(lis[i+1])
-                return int(lis[i-1])-int(lis[i+1])
+                self.answer = float(lis[i-1])-float(lis[i+1])
+                return float(lis[i-1])-float(lis[i+1])
 
             elif lis[i] == "*":
-                self.answer = int(lis[i-1])*int(lis[i+1])
-                return int(lis[i-1])*int(lis[i+1])  
+                self.answer = float(lis[i-1])*float(lis[i+1])
+                return float(lis[i-1])*float(lis[i+1])  
 
             elif lis[i] == "/":
-                self.answer = int(lis[i-1])/int(lis[i+1])
-                return int(lis[i-1])/int(lis[i+1])  
+                self.answer = float(lis[i-1])/float(lis[i+1])
+                return float(lis[i-1])/float(lis[i+1])  
     
     # Compara el resultado del problema con el ingresado por el usuario, regresa un booleano
     def check_answer(self, answer):

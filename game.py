@@ -8,9 +8,15 @@ def instrucciones():
     print('Bienvenido a GEM')
     print('"Giopardy de Estimulación Matemática"')
     print("No tiene ninguna relación con el famoso show")
-    print("Instrucciones: \n1. Escribe la coordenada que quieras contestar, el nivel aumenta de arriba hacia abajo.\n2.Escribe la respuesta correcta con numeros.\n3.Llega a los 30 puntos en 90 segundos, el puntaje aumenta de acuerdo a la dificultad.")
+    print("""
+    Instrucciones: \n
+    1. Escribe la coordenada que quieras contestar, el nivel aumenta de arriba hacia abajo.\n
+    2.Escribe la respuesta correcta con numeros (Truncado a un decimal).\n
+    3.Llega a los 30 puntos en 90 segundos, el puntaje aumenta de acuerdo a la dificultad.
+    """)
+
     while True:
-        start = input('Presione ENTER para comenzar')
+        start = input(':::Presione ENTER para comenzar :::\n')
 
         if start == '':
             return False
@@ -41,6 +47,7 @@ def game():
             print(i,'\n')
         
         # Ingreso de coordenadas
+        print(f'Puntos: {points}')
         user_choice = input('Enter coordenates: ')
 
         # Repite pregunta si la coordenada ya esta resuelta
@@ -51,7 +58,6 @@ def game():
         
         # ASCII check
         while(len(user_choice) != 2 or ord(user_choice[1]) < 65 or ord(user_choice[1]) > 69 or ord(user_choice[0]) < 49 or ord(user_choice[0]) > 53 ):
-            print(points)
             user_choice = input('Enter coordenates: ')
         
         # Agregar coordenada resuelta a lista
@@ -62,10 +68,9 @@ def game():
 
         # Imprime el problema y el puntaje
         print(problem.problem)
-        print(f'Puntos: {points}')
 
         # Pregunta al usuario por su respuesta
-        user_answer = int(input('Resultado >>> '))
+        user_answer = float(input('Resultado >>> '))
         # Calcular respuesta internamente
         problem.get_answer()
 
@@ -81,6 +86,7 @@ def game():
     
     # Si llega a los 30 puntos, gana
     print('Ganaste!')
+    print(f'Puntos totales: {points}')
 
 if __name__ == "__main__":
 
