@@ -1,76 +1,108 @@
 from boards import GameBoard, Problem
 import time
 import threading
-import sys
+import os
 
+# Funcion para mostrar las intrucciones
+def instrucciones():
+    print('Bienvenido a GEM')
+    print('"Giopardy de Estimulación Matemática"')
+    print("No tiene ninguna relación con el famoso show")
+    print("""
+    Instrucciones: \n
+    1. Escribe la coordenada que quieras contestar, el nivel aumenta de arriba hacia abajo.\n
+    2.Escribe la respuesta correcta con numeros (Truncado a un decimal).\n
+    3.Llega a los 30 puntos en 90 segundos, el puntaje aumenta de acuerdo a la dificultad.
+    """)
+
+    while True:
+        start = input(':::Presione ENTER para comenzar :::\n')
+
+        if start == '':
+            return False
+        else:
+            continue
+
+# Funcion que guarda el juego
 def game():
     
-    # initialize the object board as a GameBoard from boards.py
+    # Iniciar objeto de tablero
     board = GameBoard()
     
-    # generate the secret_board and display_board atributes 
-    # within the 'board' object instance
+    # Generar los tableros
     show_board = board.generate_display_board()
-    secret_board = board.generate_secret_board('equation.csv')
+    secret_board = board.generate_secret_board()
     
-    # list that holds the solved coordinates
+    # Lista que guarda las coordenadas ya electas
     solved = []
 
-    # point counter
+    # Acumulador de puntos
     points = 0
 
-    # repeats until points reaches a value of 2
-    while points < 3:
+    # Loop que continua hasta alcanzar al puntaje maximo
+    while points < 30:
         
-        # reprints the board each iteration
+        # Imprime la tabla visible
         for i in show_board:
             print(i,'\n')
         
-        # coordinate input, i.e. a1, b5, etc
+        # Ingreso de coordenadas
+        print(f'Puntos: {points}')
         user_choice = input('Enter coordenates: ')
 
-        # repeats if the introduced coordinate is in the solved coordinates list
+        # Repite pregunta si la coordenada ya esta resuelta
         while user_choice in solved:
+
             print('Coordenate already solved')
-            
-            # asks the user to input the coordinate again, until it's not one in the list
             user_choice = input('Enter coordenates: ')     
         
-        #ASCII check
+        # ASCII check
         while(len(user_choice) != 2 or ord(user_choice[1]) < 65 or ord(user_choice[1]) > 69 or ord(user_choice[0]) < 49 or ord(user_choice[0]) > 53 ):
-            print(points)
             user_choice = input('Enter coordenates: ')
         
-        # adds the inputed coordinate into the solved coordinates list
+        # Agregar coordenada resuelta a lista
         solved.append(user_choice)
 
-        # creates a Problem type object from boards.py with the atributes it needs
-        problem = Problem(user_choice.upper(),show_board,secret_board)
+        # Crea el objeto de problema que esta en la coordenada que ingreso el usuario
+        problem = Problem(user_choice.upper(), show_board, secret_board)
 
-        # prints the equation to solve
+        # Imprime el problema y el puntaje
         print(problem.problem)
 
-        user_answer = int(input('Resultado >>> '))
+        # Pregunta al usuario por su respuesta
+        user_answer = float(input('Resultado >>> '))
+        # Calcular respuesta internamente
         problem.get_answer()
 
-        # compares the user answer input with the actual answer using 
-        # a method from the class Problem from boards.py
+        # Si la respuesta es correcta, se suman puntos dependiendo del nivel
         if problem.check_answer(user_answer):
             print(problem.check_answer(user_answer))
-            points += 1
+            points += problem.points
         else:
             print(problem.check_answer(user_answer))
 
-        # switches the printed coordinate with an x
+        # Cambia la coordenada electa por una x en la tabla visible
         board.remove_coord(problem.row, problem.column)
     
+    # Si llega a los 30 puntos, gana
     print('Ganaste!')
+    print(f'Puntos totales: {points}')
 
-#threads y timeout
-timeout = 60
-t = threading.Timer(timeout, print, ["bruh, time's up"])
-t.start()
+def endGame():
+    print("\nSe acabó el tiempo")
+    os._exit(0)
 
-game()
+if __name__ == "__main__":
 
-#####
+    # Imprime instrucciones
+    instrucciones()
+
+    # Fija temporizador
+    timeout = 90
+    # Imprime que se acabo el tiempo, y termina la ejecucion
+    t = threading.Timer(timeout, endGame)
+    t.start()
+
+    # Correr juego
+    game()
+
