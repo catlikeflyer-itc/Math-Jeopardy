@@ -2,7 +2,6 @@ from boards import GameBoard, Problem
 import time
 import threading
 import os
-import sys
 
 # Funcion para mostrar las intrucciones
 def instrucciones():
@@ -88,6 +87,7 @@ def game():
     # Si llega a los 30 puntos, gana
     print('Ganaste!')
     print(f'Puntos totales: {points}')
+    os._exit(0)
 
 def endGame():
     print("\nSe acabó el tiempo")
